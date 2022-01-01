@@ -1,8 +1,11 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import App from './app.js';
 
 function render() {
-  ReactDOM.render(<h2>Hello from React!</h2>, document.body);
+  ReactDOM.render(
+      <React.StrictMode>
+        <App/>
+      </React.StrictMode>, document.body);
 }
-
 render();
