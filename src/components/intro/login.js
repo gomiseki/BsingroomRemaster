@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import CustomButton from '../btn';
 
 const Loginform = styled.form`
     width: 400px;
@@ -29,30 +30,12 @@ const NameInput = styled.input`
     border-radius: 10px;
 `
 const Worning = styled.input`
+    text-align: center;
+    width: 80%;
     margin-bottom: 20px;
     color: red;
     border: none;
     background: transparent;
-`
-
-const Entrance = styled.button`
-    position: relative;
-    width: 80px;
-    height: 32px;
-    text-align: center;
-    text-decoration: none;
-    cursor: pointer;
-
-    background-color: #EEEEEE;
-    border: 1px solid navy;
-    border-radius: 5px;
-
-    box-shadow: 3px 3px navy;
-
-    &:hover {
-        background: #FFFFFF;}
-    &:active {
-        background: #DDDDDD;}
 `
 
 const IconSelect = ({value, onChange, options}) =>{
@@ -111,7 +94,7 @@ function Login(){
             <NameInput type="text" name="nickname" placeholder="nickname" value={nickname} onChange={onChange} size="20"/>
             </div>
             <Worning readOnly={true} type="text" value={worning}/>
-            <Entrance type="submit">입장</Entrance>
+            <CustomButton type="submit">입장</CustomButton>
         </Loginform>
     )}
 export default Login;
