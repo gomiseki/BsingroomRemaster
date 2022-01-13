@@ -1,10 +1,33 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+const sizes = {
+    large: {
+        width: "100px",
+        height: "45px",
+        fontSize: "20px"
+    },
+    medium: {
+        width: "80px",
+        height: "32px",
+        fontSize: "12px"
+    },
+    small: {
+        height: '1.75rem',
+        fontSize: '0.875rem'
+    }
+  };
+
+const sizeStyles = css`
+  ${({ size }) => css`
+    width: ${sizes[size].width};
+    height: ${sizes[size].height};
+    font-size: ${sizes[size].fontSize};
+  `}
+`;
 
 const Btn = styled.button`
-    position: relative;
-    width: 80px;
-    height: 32px;
+    ${sizeStyles}
     text-align: center;
     text-decoration: none;
     cursor: pointer;
@@ -19,10 +42,12 @@ const Btn = styled.button`
     &:active {
         background: #DDDDDD;}
 `
-
-function CustomButton({color, children}) {
+Btn.defaultProps = {
+    size: 'medium'
+}
+function CustomButton({color, size, children, style, onClick}) {
     return (
-        <Btn color={color}>{children}</Btn>
+        <Btn onClick={onClick} style={style} color={color} size={size}>{children}</Btn>
     )}
 
 export default CustomButton;

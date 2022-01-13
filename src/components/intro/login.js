@@ -38,9 +38,9 @@ const Worning = styled.input`
     background: transparent;
 `
 
-const IconSelect = ({value, onChange, options}) =>{
+const IconSelect = ({onChange, options}) =>{     //icon select 담당 컴포넌트
     return (
-		<IconSel name="icon" value ={value} onChange={onChange}>
+		<IconSel name="icon" onChange={onChange}>
             <option value="" selected disabled hidden ></option>
 			{options.map((option) => (
 				<option
@@ -52,12 +52,13 @@ const IconSelect = ({value, onChange, options}) =>{
 		</IconSel>
 	)
 }
+
 function Login(){
     const navigate = useNavigate();
 
-    const Icons = ["🐱","🦝","🐺","🦊","🦁","🐯","🐼","🐨","🐻"]
+    const Icons = ["🐱","🦝","🐺","🦊","🦁","🐯","🐼","🐨","🐻"]    //select태그에 들어갈 option아이콘
 
-    const [worning, setWorning] = useState();
+    const [worning, setWorning] = useState();   //정보 미입력 시 경고
 
     const [inputs, setInputs] = useState({
         nickname: '',
@@ -74,7 +75,7 @@ function Login(){
         });
       };
 
-    const onSubmit = (e) =>{
+    const onSubmit = (e) =>{              //완전 입력 시 lobby로 이동
         e.preventDefault();
 
         if(nickname==="" || icon==="") {
