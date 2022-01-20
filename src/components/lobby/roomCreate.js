@@ -19,10 +19,9 @@ const Label = styled.div`
     width: 100%;
     padding-bottom: 20px;
     font-size:20px;
-    margin-bottom: 50px;
     border-bottom: solid 1px lightgrey;
 `
-function RoomCreate({user,navigate}){
+function RoomCreate({user,navigate, volume}){
 
     const [inputs, setInputs] = useState({
         roomname: '',
@@ -40,13 +39,13 @@ function RoomCreate({user,navigate}){
     const onCreate = () => {        //'방만들기' 클릭 시 실행
         user.host = true;
         user.joinRoom("room_"+roomname)
-        navigate('/room',{replace:true})
+        navigate('/room',{replace:true, state:{volume:volume}})
     };
 
     return( 
     <Container>
         <Label>Room Create</Label>
-        <div style={{flex:"10"}}>
+        <div style={{flex:"10", paddingTop:"20px"}}>
             <input style={{width:"60%", height:"25px",
                         border:"none",  marginRight: '10px', borderRadius:"5px"}}
                 name="roomname"

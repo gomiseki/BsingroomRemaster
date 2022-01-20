@@ -19,39 +19,50 @@ const Label = styled.div`
   width: 100%;
   padding-bottom: 20px;
   font-size:20px;
-  margin-bottom: 50px;
   border-bottom: solid 1px lightgrey;
 `
+const RoomBlock = styled.div`
+  display: flex;
+  padding: 0 10px;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
 
-function Room({user,room,navigate}){
+`
+function Room({user,room,navigate,volume}){
 
     const enter = (roomname) => {
         user.joinRoom(roomname);
-        navigate('/room',{replace:true})
+        navigate('/room',{replace:true, state:{volume:volume}})
     }
 
     return (
-        <div style={{marginTop:'6px'}}>
-          
-            {room.roomname.slice(5)} <span>: {room.membercount}명</span>
-          
-          &nbsp;
-          {room.membercount == 5 ? null : <button onClick={enter(room.roomname)}>입장</button>}
-        </div>
+        <RoomBlock>
+          <div style={{flex:"3"}}>
+            {room.roomname.slice(5)} 
+          </div>
+          <div style={{flex:"1"}}>
+          🎤:{room.membercount}
+          </div>
+          <div style={{flex:"1", }}>
+            {room.membercount == 5 ? null : <button style={{}} onClick={()=>enter(room.roomname)}>입장</button>}
+          </div>
+        </RoomBlock>
       );
     } 
 
-function RoomsInfo({user,rooms,navigate}){
+function RoomsInfo({user,rooms,navigate,volume}){
     return( 
     <Container>  
         <Label>Room List</Label>
-        <div style={{flex:"10"}}>
+        <div style={{flex:"10", width:"100%",paddingTop:"20px"}}>
           {rooms.filter(x=>x.roomname).map(room => (
           <Room
             room={room}
             key={room.id}
             user={user}
             navigate={navigate}
+            volume={volume}
           />
           ))}
         </div>

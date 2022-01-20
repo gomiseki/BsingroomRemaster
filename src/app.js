@@ -2,7 +2,7 @@ import React,{ createContext, useState } from 'react';
 import{ HashRouter, Route, Routes} from 'react-router-dom';
 import Intro from './components/intro/intro';
 import Lobby from './components/lobby/lobby';
-//import Room from './components/room/room'
+import Room from './components/room/room';
 
 
 export const UserDispatch = createContext(null);
@@ -16,10 +16,10 @@ function App(){
             <Routes>
               <Route path="/" element={<Intro/>}/>     
               <Route path="/lobby" element={<Lobby/>}/>
+              <Route path="/room" element={<Room/>}/>
             </Routes>
           </UserDispatch.Provider>
         </HashRouter>
     )
 }
 export default App
-//<Route path="/room" element={<Room/>}/>

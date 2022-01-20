@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React,{useState, useEffect, useRef} from "react";
 import styled from 'styled-components';
 
 
@@ -16,6 +16,7 @@ const Copyright = styled.div`
     padding: 8px;
     margin-right: 20px;
     border: 1px solid lightgray;
+    text-align: center;
 `
 
 const Control = styled.div`
@@ -36,23 +37,36 @@ const DeviceSelect = styled.select`
 `
 
 const VolumeInput = styled.input`
-    
 `
-const Device = ({deviceList, onChange}) =>{
+let dvList = []
+
+const Device = ({selected, onChange}) =>{
+    console.log(dvList);
     return(
-        <DeviceSelect onChange={onChange}>
-            {deviceList.map((device)=>(
-            <option value={device.dvID}>
-            {device.dvLabel}
-            </option>
-            ))}
+        <DeviceSelect value={selected} onChange={onChange}>
+            {dvList.map((device) => (
+                <option value={device.dvID}>
+                {device.dvLabel}
+                </option>
+            )
+        )}
         </DeviceSelect>
     )
 }
 
-const Volume = () =>{
+const Volume = ({user}) =>{
+    const voRef = useRef();
+    const onChange = (e) =>{
+        user.setLocalVolume(e.target.value)
+        console.log(user.localGainNode.gain.value)
+    }
+    useEffect(() => {
+        if(user){
+            voRef.current.value = user.localGainNode.gain.value
+        }
+    }, [user]);
     return(
-        <VolumeInput type="range">
+        <VolumeInput type={"range"} max={1} min={0} step={0.01} ref={voRef} onChange={onChange}>
 
         </VolumeInput>
     )
@@ -60,36 +74,51 @@ const Volume = () =>{
 
 function Devices({user}){
 
-    const [deviceList, setDeviceList] = useState([]);
+    const [selected, setSelected] = useState("default");
+    const audioRef = useRef();
 
     const onChange = (e) =>{
         if(user){
             user.setMedia(e.target.value);
+            setSelected(e.target.value)
         }
     }
+
     useEffect(() => {
         navigator.mediaDevices.enumerateDevices()
         .then((list)=> {
-            let dvList = []
             list.forEach((device)=>{
                 if(device.kind=='audioinput'){
                 dvList.push({dvID:device.deviceId, dvLabel:device.label})
                 }
             })
-            setDeviceList(dvList)
         })
+        
         return () => {
-            
+            dvList = []
         };
     }, []);
+
+    const media = async()=>{
+        await user.setMedia();
+        console.log(user.localMediaStream);
+        user.setLocalAudio(audioRef.current)
+    }
+
+    useEffect(() => {
+        if(user){
+            media();
+        }
+    }, [user]);
 
     return( 
     <Container>
         <Copyright>@Copyright 소프트웨어 공학 1조</Copyright>
         <Control>
             <p>마이크 장치</p>
-            <Device deviceList={deviceList} onChange={onChange}></Device>
-            <Volume></Volume>
+            <Device user={user} selected={selected} onChange={onChange}></Device>
+            <Volume user={user}></Volume>
+            <audio ref={audioRef}></audio>
         </Control>
     </Container>
     )
