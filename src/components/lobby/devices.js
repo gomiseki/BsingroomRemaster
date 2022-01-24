@@ -101,7 +101,7 @@ function Devices({user}){
 
     const media = async()=>{
         await user.setMedia();
-        console.log(user.localMediaStream);
+        console.log(user.localDestination);
         user.setLocalAudio(audioRef.current)
     }
 

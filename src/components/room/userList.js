@@ -51,11 +51,10 @@ const Volume = ({member}) =>{
         <VolumeInput  max="1" min="0" step="0.1" onChange={setVolume}></VolumeInput>
     )
 }
-function UserList({flex, members, volume}){
+function UserList({flex, members}){
 
     const audioRefs = useRef([]);
     audioRefs.current = [];
-
 
     return(
         <Container flex={flex}>
