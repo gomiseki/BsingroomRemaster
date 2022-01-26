@@ -51,30 +51,38 @@ const Volume = ({member}) =>{
         <VolumeInput  max="1" min="0" step="0.1" onChange={setVolume}></VolumeInput>
     )
 }
-function UserList({flex, members}){
-
+const UserList = React.forwardRef(({flex, members}, ref) => {
+    
     const audioRefs = useRef([]);
     audioRefs.current = [];
 
     return(
         <Container flex={flex}>
             <Title>참가자</Title>
-            {members.map(member =>(
-            !member.ID ?
-            <UserDisplay style={{border:"1px solid lightgray", borderRadius:"5px"}}>
-                <Icon>{member.userIcon}</Icon>
-                <Nickname>{member.nickname}</Nickname>
-                <audio ref={()=>audioRefs.current.push("me")}/>
-            </UserDisplay>
-            :
-            <UserDisplay>
-                <Icon>{member.userIcon}</Icon>
-                <Nickname>{member.nickname}</Nickname>
-                <Volume member={member} type="range"></Volume>
-                <audio ref={()=>audioRefs.current.push(member.ID)}/>
-            </UserDisplay>
-            ))}
+            {members.map(memberId =>{
+                if(memberId == 'me'){
+                    const member = ref.current[0]
+                    return(
+                        <UserDisplay style={{border:"1px solid lightgray", borderRadius:"5px"}}>
+                            <Icon>{member.userIcon}</Icon>
+                            <Nickname>{member.nickname}</Nickname>
+                        </UserDisplay>
+                    )
+                }
+                else{
+                    const member = ref.current.find(x => x.ID == memberId);
+                    console.log(member)
+                    return(
+                        <UserDisplay>
+                            <Icon>{member.userIcon}</Icon>
+                            <Nickname>{member.nickname}</Nickname>
+                            <Volume member={member} type="range"></Volume>
+                            <audio ref={()=>audioRefs.current.push(member.ID)}/>
+                        </UserDisplay>
+                    )
+                }
+            })}
         </Container>
     )
-}
+});
 export default UserList

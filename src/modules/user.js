@@ -14,7 +14,7 @@ class User{
     constructor(userIcon, nickname, ID){
         this.userIcon = userIcon;
         this.nickname = nickname;
-        this.ID = ID
+        this.ID = ID;
     }
     
     setConnection(me, join){
@@ -38,8 +38,8 @@ class User{
             .then((result)=>{
                 this.connection.setLocalDescription(result)
                 me.socket.emit("offer", result, this.ID)
-        })
-    }
+            })
+        }
         this.connection.addEventListener("icecandidate", (ice)=>{
             console.log(ice)
             me.socket.emit("ice", ice.candidate, this.ID )
@@ -91,6 +91,7 @@ class Me extends User{
 
     constructor(userIcon, nickname){
         super(userIcon, nickname);
+        this.socket.emit("getNickname", this.nickname, this.userIcon)
         this.setMedia();
     }
     

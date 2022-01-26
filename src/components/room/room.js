@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext, useRef} from "react"
+import React, {useEffect, useState, useContext, useRef, useCallback} from "react"
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Devices from "../lobby/devices";
@@ -25,50 +25,55 @@ const FlexContainer = styled.div`
     flex-direction: column;
 `
 const Title = styled.div`
-
 `
+
+const useMember = (initialUser) => {
+    const [memberState, setMembers] = useState(['me']);
+    const memberRef = useRef([]);
+    memberRef.current = [initialUser];
+
+    const setMember = (memberData,user,joined) => {
+
+        const idList = memberRef.current.map(x => x.ID)
+        const dataIdList = memberData.map(x=>x.id)
+
+        if(idList.length<dataIdList.length){
+            for(const member of memberData){
+                if(!member.id in idList && member.id != user.socket.id ){
+                    let newUser = new User(member.icon, member.nickname, member.id)
+                    newUser.setConnection(user, joined)
+                    memberRef.current.push(newUser)
+                    setMembers(...memberState, member.id)
+                    }
+                }
+        }else{
+            for(const member of memberRef.current){
+                if(!member.id in dataIdList){
+                    member.connection.close();
+                    member.audioCtx.close();
+                    delete memberRef.current[memberRef.current.findIndex(member)]
+                    setMembers(memberState.filter(id => id!=member.id))
+                    }
+                }
+        }
+    }
+    return [memberState, memberRef, setMember]
+}
 
 function Room() {
     
     var {user, setUser} = useContext(UserDispatch); //유저 전역관리
     const navigate = useNavigate(); //리다이렉트
 
-    const members = useRef([]); //참가유저 관리
-    members.current = [];
-    const [memberState, setmemberState] = useState(members.current);
+    const [memberState, memberRef, setMember] = useMember(user);
 
-    const devideConnect = async(data, joined, memberList)=>{
-        console.log(memberList)
-        let tempMemberList = [user];
-        for(const value of data){
-            if(value.id!=user.ID)
-            tempMemberList.push(new User(value.icon, value.nickname, value.id)) 
-        }
-        console.log(memberList)
-        if(memberList.length<tempMemberList.length){
-            let needConnection = tempMemberList.filter(member=> !memberList.includes(member))
-            needConnection.forEach((member)=>{
-                member.setConnection(user,joined)
-            })
-        }
-        else{
-            let needDisConnection = memberList.filter(member=> !tempMemberList.includes(member))
-            needDisConnection.forEach((member)=>{
-                member.connection.close();
-                member.audioCtx.close();
-            })
-        }
-        return tempMemberList
-    }
     useEffect(() => {
 
         user.socket.emit('fetchMember', user.roomInfo)
 
         user.socket.on("showMemberList", (data, joined)=>{
-            let tempMemberList =  devideConnect(data, joined, members.current);
-            members.current = tempMemberList
-            setmemberState(tempMemberList)
             console.log(data)
+            setMember(data, user, joined)
         })
 
         user.socket.on("offer", (offer, senderID) => {
@@ -88,13 +93,7 @@ function Room() {
                 if(member.ID==senderID)member.setIce(ice);
             })
           });
-        
-        if(user.host){
-
-        }
-        else{
-
-        }
+    
         return () => {
             user.socket.removeAllListeners();
         };
@@ -109,7 +108,7 @@ function Room() {
             <div style={{flex:"11", display:'flex', width:'100%'}}>
             <FlexContainer flex={'2'}>
                 <ReservedSongList flex={'1'}></ReservedSongList>
-                <UserList members={memberState} flex={'1'}></UserList>
+                <UserList members={memberState} ref={memberRef} flex={'1'}></UserList>
             </FlexContainer>
             <FlexContainer flex={'4'}>
                 <Title flex={'1'}></Title>
