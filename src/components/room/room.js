@@ -36,17 +36,17 @@ const useMember = (initialUser) => {
 
         const idList = memberRef.current.map(x => x.ID)
         const dataIdList = memberData.map(x=>x.id)
-
+        console.log(memberState, idList, dataIdList)
         if(idList.length<dataIdList.length){
             for(const member of memberData){
-                if(!member.id in idList && member.id != user.socket.id ){
+                if(!(member.id in idList) && member.id != user.ID ){
                     let newUser = new User(member.icon, member.nickname, member.id)
                     newUser.setConnection(user, joined)
                     memberRef.current.push(newUser)
                     setMembers(...memberState, member.id)
                     }
                 }
-        }else{
+        }else if(idList.length>dataIdList.length){
             for(const member of memberRef.current){
                 if(!member.id in dataIdList){
                     member.connection.close();
@@ -56,6 +56,7 @@ const useMember = (initialUser) => {
                     }
                 }
         }
+        console.log(memberState)
     }
     return [memberState, memberRef, setMember]
 }
@@ -100,6 +101,8 @@ function Room() {
     }, []);
 
     const exitRoom = (e) =>{
+        user.socket.emit('leaveRoom', user.roomInfo, user.host)
+        user.host=false;
         navigate('/lobby', {replace:true, state: { nickname : user.nickname, icon : user.userIcon}})
     }
 

@@ -58,7 +58,6 @@ const Volume = ({user}) =>{
     const voRef = useRef();
     const onChange = (e) =>{
         user.setLocalVolume(e.target.value)
-        console.log(user.localGainNode.gain.value)
     }
     useEffect(() => {
         if(user){

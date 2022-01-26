@@ -88,7 +88,8 @@ class Me extends User{
     localAudioCtx = new AudioContext();
     localGainNode = this.localAudioCtx.createGain();
     localDestination = this.localAudioCtx.createMediaStreamDestination();
-
+    ID = null;
+    
     constructor(userIcon, nickname){
         super(userIcon, nickname);
         this.socket.emit("getNickname", this.nickname, this.userIcon)

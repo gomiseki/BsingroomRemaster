@@ -63,7 +63,7 @@ function Lobby(){
 
     useEffect(() => {       //유저 인스턴스 생성 후 채팅방 정보 업데이트
         if(user){
-            console.log(user)
+            user.ID = user.socket.id;
             user.socket.on('showRoomList', (rooms)=>{       
                 let roomList = [];
                 console.log(rooms)

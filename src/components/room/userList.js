@@ -55,11 +55,12 @@ const UserList = React.forwardRef(({flex, members}, ref) => {
     
     const audioRefs = useRef([]);
     audioRefs.current = [];
-
+    console.log(members)
     return(
         <Container flex={flex}>
             <Title>참가자</Title>
             {members.map(memberId =>{
+                console.log(members)
                 if(memberId == 'me'){
                     const member = ref.current[0]
                     return(
