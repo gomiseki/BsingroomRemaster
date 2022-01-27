@@ -4,10 +4,10 @@ import {User} from './user'
 export default function useMember(initialUser){
 
     const [memberState, setMembers] = useState([initialUser.ID]);
-    const memberRef = useRef([]);
-    memberRef.current = [initialUser];
+    const memberRef = useRef([initialUser]);
 
-    const pushRef = async(newUser)=>{
+    const pushRef = async(newUser, user, joined)=>{
+        newUser.setConnection(user, joined)
         memberRef.current.push(newUser)
         return memberRef
     }
@@ -15,13 +15,15 @@ export default function useMember(initialUser){
 
         const idList = memberRef.current.map(x => x.ID)
         const dataIdList = memberData.map(x=>x.id)
+        console.log(idList, dataIdList)
         if(idList.length<dataIdList.length){
             for(const member of memberData){
+                console.log(!(member.id in idList) && member.id != user.ID)
                 if(!(member.id in idList) && member.id != user.ID ){
-                    await pushRef(new User(member.icon, member.nickname, member.id))
-                    memberRef.current.slice(-1)[0].setConnection(user, joined)
-                    setMembers([...memberState, member.id])
-                    console.log(memberRef)
+                    await pushRef(new User(member.icon, member.nickname, member.id),user, joined)
+                    console.log(memberRef.current[memberRef.current.length-1])
+                    setMembers(dataIdList)
+                    
                     }
                 }
         }else if(idList.length>dataIdList.length){
@@ -30,7 +32,7 @@ export default function useMember(initialUser){
                     member.connection.close();
                     member.audioCtx.close();
                     delete memberRef.current[memberRef.current.findIndex(member)]
-                    setMembers(memberState.filter(id => id!=member.id))
+                    setMembers(dataIdList)
                     }
                 }
         }

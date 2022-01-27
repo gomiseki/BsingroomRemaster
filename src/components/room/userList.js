@@ -44,19 +44,26 @@ const VolumeInput = styled.input`
 const Volume = ({member}) =>{
 
     const setVolume = (e) => {
-        console.log(e.target)
+        member.setVolume(e.target.value)
     }
-
-    member.setAudio(audioRefs.current.find((id)=>id==member.ID))
     return(
         <VolumeInput  max="1" min="0" step="0.1" onChange={setVolume}></VolumeInput>
+    )
+}
+
+const Audio = ({member})=>{
+    const audioRef = useRef();
+    useEffect(() => {
+       member.setAudio(audioRef)
+    }, []);
+    return(
+        <audio ref={audioRef}></audio>
     )
 }
 function UserList({flex, user}){
 
     const [memberState, memberRef, setMember] = useMember(user)
     const audioRefs = useRef([]);
-    audioRefs.current = [];
 
     useEffect(() => {
         user.socket.on("showMemberList", (data, joined)=>{
@@ -87,7 +94,7 @@ function UserList({flex, user}){
                             <Icon>{member.userIcon}</Icon>
                             <Nickname>{member.nickname}</Nickname>
                             <Volume member={member} type="range"></Volume>
-                            <audio ref={()=>audioRefs.current.push(member.ID)}/>
+                            <Audio member={member}/>
                         </UserDisplay>
                     )
                 }
