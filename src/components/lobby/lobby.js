@@ -54,7 +54,7 @@ function Lobby(){
         
         if(!user)
         setUser(new Me(history.state.usr.icon, history.state.usr.nickname))
-        console.log(user)
+        
 
         return () => {
             user.socket.removeAllListeners();   //socketOn 이벤트는 리렌더링할 때마다 수가 늘어남에 따라 재등록을 방지함.
@@ -63,10 +63,8 @@ function Lobby(){
 
     useEffect(() => {       //유저 인스턴스 생성 후 채팅방 정보 업데이트
         if(user){
-            user.ID = user.socket.id;
             user.socket.on('showRoomList', (rooms)=>{       
                 let roomList = [];
-                console.log(rooms)
                 for(var i=0; i<rooms.length; ++i){
                     //if (rooms[i])
                     if(rooms[i].item.slice(0,4)=="room")

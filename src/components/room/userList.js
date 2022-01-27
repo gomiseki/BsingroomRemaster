@@ -1,6 +1,7 @@
 import React,{useRef, useEffect} from "react";
 import styled from "styled-components";
 import { Me } from "../../modules/user";
+import useMember from "../../modules/useMember";
 
 const Container = styled.div`
     flex: ${props=>props.flex};
@@ -51,18 +52,26 @@ const Volume = ({member}) =>{
         <VolumeInput  max="1" min="0" step="0.1" onChange={setVolume}></VolumeInput>
     )
 }
-const UserList = React.forwardRef(({flex, members}, ref) => {
-    
+function UserList({flex, user}){
+
+    const [memberState, memberRef, setMember] = useMember(user)
     const audioRefs = useRef([]);
     audioRefs.current = [];
-    console.log(members)
+
+    useEffect(() => {
+        user.socket.on("showMemberList", (data, joined)=>{
+            console.log(data)
+            setMember(data, user, joined)
+        })
+    }, []);
+
     return(
         <Container flex={flex}>
             <Title>참가자</Title>
-            {members.map(memberId =>{
-                console.log(members)
-                if(memberId == 'me'){
-                    const member = ref.current[0]
+            {memberState.map(memberId =>{
+                console.log(memberState)
+                if(memberId == user.ID){
+                    const member = memberRef.current[0]
                     return(
                         <UserDisplay style={{border:"1px solid lightgray", borderRadius:"5px"}}>
                             <Icon>{member.userIcon}</Icon>
@@ -71,8 +80,8 @@ const UserList = React.forwardRef(({flex, members}, ref) => {
                     )
                 }
                 else{
-                    const member = ref.current.find(x => x.ID == memberId);
-                    console.log(member)
+                    console.log(memberRef.current)
+                    const member = memberRef.current.find(x => x.ID == memberId);
                     return(
                         <UserDisplay>
                             <Icon>{member.userIcon}</Icon>
@@ -85,5 +94,5 @@ const UserList = React.forwardRef(({flex, members}, ref) => {
             })}
         </Container>
     )
-});
+};
 export default UserList
