@@ -54,7 +54,8 @@ const Volume = ({member}) =>{
 const Audio = ({member})=>{
     const audioRef = useRef();
     useEffect(() => {
-       member.setAudio(audioRef)
+        console.log(audioRef.current)
+       member.setAudio(audioRef.current)
     }, []);
     return(
         <audio ref={audioRef}></audio>
@@ -70,6 +71,23 @@ function UserList({flex, user}){
             console.log(data)
             setMember(data, user, joined)
         })
+        user.socket.on("offer", (offer, senderID) => {
+            memberRef.current.forEach((member)=>{
+                if(member.ID==senderID)member.setOffer(user,offer);
+            })
+          });
+        
+        user.socket.on("answer", (answer, senderID) => {
+            memberRef.current.forEach((member)=>{
+                if(member.ID==senderID)member.setAnswer(answer);
+            })
+        });
+
+        user.socket.on("ice", (ice, senderID) => {
+            memberRef.current.forEach((member)=>{
+                if(member.ID==senderID)member.setIce(ice);
+            })
+          });
     }, []);
 
     return(

@@ -36,25 +36,6 @@ function Room() {
     useEffect(() => {
         console.log(user)
         user.socket.emit('fetchMember', user.roomInfo)
-
-
-        user.socket.on("offer", (offer, senderID) => {
-            memberRef.current.forEach((member)=>{
-                if(member.ID==senderID)member.setOffer(user,offer);
-            })
-          });
-        
-        user.socket.on("answer", (answer, senderID) => {
-            memberRef.current.forEach((member)=>{
-                if(member.ID==senderID)member.setAnswer(answer);
-            })
-        });
-
-        user.socket.on("ice", (ice, senderID) => {
-            memberRef.current.forEach((member)=>{
-                if(member.ID==senderID)member.setIce(ice);
-            })
-          });
     
         return () => {
             user.socket.removeAllListeners();
