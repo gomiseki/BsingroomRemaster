@@ -36,7 +36,11 @@ function Room() {
     useEffect(() => {
         console.log(user)
         user.socket.emit('fetchMember', user.roomInfo)
-    
+        
+        user.socket.on("breakRoom",()=>{
+            exitRoom()
+        })
+
         return () => {
             user.socket.removeAllListeners();
         };
@@ -44,7 +48,7 @@ function Room() {
 
 
 
-    const exitRoom = (e) =>{
+    const exitRoom = () =>{
         user.socket.emit('leaveRoom', user.roomInfo, user.host)
         user.host=false;
         navigate('/lobby', {replace:true, state: { nickname : user.nickname, icon : user.userIcon}})

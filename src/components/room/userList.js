@@ -63,7 +63,6 @@ const Audio = ({member})=>{
 function UserList({flex, user}){
 
     const [memberState, memberRef, setMember] = useMember(user)
-    const audioRefs = useRef([]);
 
     useEffect(() => {
         user.socket.on("showMemberList", (data, joined)=>{
