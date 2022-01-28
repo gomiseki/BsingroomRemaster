@@ -28,10 +28,12 @@ export default function useMember(initialUser){
                 }
         }else if(idList.length>dataIdList.length){
             for(const member of memberRef.current){
-                if(!member.id in dataIdList){
+                if(!dataIdList.includes(member.ID)){
+                    console.log(memberRef.current,dataIdList,String(member.ID) )
                     member.connection.close();
                     member.audioCtx.close();
-                    delete memberRef.current[memberRef.current.findIndex(member)]
+                    delete memberRef.current[memberRef.current.indexOf(member)]
+                    console.log(dataIdList)
                     setMembers(dataIdList)
                     }
                 }
