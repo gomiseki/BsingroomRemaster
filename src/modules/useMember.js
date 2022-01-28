@@ -32,7 +32,7 @@ export default function useMember(initialUser){
                     console.log(memberRef.current,dataIdList,String(member.ID) )
                     member.connection.close();
                     member.audioCtx.close();
-                    delete memberRef.current[memberRef.current.indexOf(member)]
+                    memberRef.current.splice(memberRef.current.indexOf(member),1)
                     console.log(dataIdList)
                     setMembers(dataIdList)
                     }

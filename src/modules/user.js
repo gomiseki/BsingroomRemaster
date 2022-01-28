@@ -8,9 +8,8 @@ class User{
     roomInfo = false;
     mediaStream;
     connection;
-    audioCtx = new AudioContext();
-    gainNode = this.audioCtx.createGain();
     audioRef;
+
     constructor(userIcon, nickname, ID){
         this.userIcon = userIcon;
         this.nickname = nickname;
@@ -48,12 +47,8 @@ class User{
         
         this.connection.addEventListener("addstream", (data)=>{
             this.mediaStream = data.stream
-            this.audioRef.srcObject = data.stream
-            this.source = this.audioCtx.createMediaStreamSource(this.audioRef.srcObject)
-            this.gainNode = this.audioCtx.createGain()
-            this.source.connect(this.gainNode)
-            this.source.connect(this.audioCtx.destination)
-            this.gainNode.gain.value = 0.5
+            this.audioRef.srcObject = this.mediaStream
+            this.audioRef.play();
         })
         
     }
@@ -76,7 +71,7 @@ class User{
     }
 
     setVolume(volume){
-        this.gainNode.gain.value = volume;
+        this.audioRef.volume = volume;
     }
 }
 
