@@ -6,11 +6,11 @@ class User{
 
     host = false;
     roomInfo = false;
-    mediaStream = null;
-    connection = null;
+    mediaStream;
+    connection;
     audioCtx = new AudioContext();
     gainNode = this.audioCtx.createGain();
-
+    audioRef;
     constructor(userIcon, nickname, ID){
         this.userIcon = userIcon;
         this.nickname = nickname;
@@ -18,6 +18,7 @@ class User{
     }
     
     setConnection(me, join){
+        console.log('setconnection', this.ID, join)
         this.connection = new RTCPeerConnection({
             iceServers: [
                 {
@@ -47,6 +48,12 @@ class User{
         
         this.connection.addEventListener("addstream", (data)=>{
             this.mediaStream = data.stream
+            this.ref.srcObject = data.stream
+            this.source = this.audioCtx.createMediaStreamSource(ref.srcObject)
+            this.gainNode = this.audioCtx.createGain()
+            this.source.connect(this.gainNode)
+            this.source.connect(this.audioCtx.destination)
+            this.gainNode.gain.value = 0.5
         })
         
     }
@@ -65,15 +72,6 @@ class User{
 
     setIce(ice){
         this.connection.addIceCandidate(ice);
-    }
-
-    setAudio(ref){
-        console.log(this.mediaStream)
-        ref.srcObject = this.mediaStream;
-        this.source = this.audioCtx.createMediaStreamSource(ref.srcObject)
-        this.gainNode = this.audioCtx.createGain()
-        this.source.connect(this.gainNode)
-        this.source.connect(this.audioCtx.destination)
     }
 
     setVolume(volume){
