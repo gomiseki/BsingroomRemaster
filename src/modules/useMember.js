@@ -31,7 +31,6 @@ export default function useMember(initialUser){
                 if(!dataIdList.includes(member.ID)){
                     console.log(memberRef.current,dataIdList,String(member.ID) )
                     member.connection.close();
-                    member.audioCtx.close();
                     memberRef.current.splice(memberRef.current.indexOf(member),1)
                     console.log(dataIdList)
                     setMembers(dataIdList)
