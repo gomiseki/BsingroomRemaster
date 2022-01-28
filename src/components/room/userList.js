@@ -54,7 +54,6 @@ const Volume = ({member}) =>{
 const Audio = ({member})=>{
     const audioRef = useRef();
     useEffect(() => {
-       console.log(audioRef.current)
        member.audioRef = audioRef.current;
     }, []);
     return(

@@ -48,8 +48,8 @@ class User{
         
         this.connection.addEventListener("addstream", (data)=>{
             this.mediaStream = data.stream
-            this.ref.srcObject = data.stream
-            this.source = this.audioCtx.createMediaStreamSource(ref.srcObject)
+            this.audioRef.srcObject = data.stream
+            this.source = this.audioCtx.createMediaStreamSource(this.audioRef.srcObject)
             this.gainNode = this.audioCtx.createGain()
             this.source.connect(this.gainNode)
             this.source.connect(this.audioCtx.destination)
@@ -57,6 +57,7 @@ class User{
         })
         
     }
+
     setOffer(me, offer){
         this.connection.setRemoteDescription(offer);
         this.connection.createAnswer()
