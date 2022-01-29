@@ -24,8 +24,22 @@ const FlexContainer = styled.div`
     display: flex;
     flex-direction: column;
 `
-const Title = styled.div`
+const TitleInput = styled.input`
+    flex: ${props=> props.flex};
+    margin: 5px;
+    border: 1px solid lightgray;
+    overflow-x: hidden;
+    border-radius: 5px;
+    background-color: transparent;
+    padding: 0px 10px;
+    font-size: x-large;
+    color: white;
 `
+const Title = ({value, flex}) =>{
+    return(
+        <TitleInput flex={flex} value={value}/>
+    )
+}
 
 function Room() {
     
@@ -62,11 +76,11 @@ function Room() {
                 <UserList user={user} flex={'1'}></UserList>
             </FlexContainer>
             <FlexContainer flex={'4'}>
-                <Title flex={'1'}></Title>
-                <YTVideo flex={'1'}></YTVideo>
+                <Title value={user.roomInfo.substr(5)} flex={'1'}></Title>
+                <YTVideo flex={'10'}></YTVideo>
             </FlexContainer>
             <FlexContainer flex={'2'}>
-                <Chatting flex={'10'}></Chatting>
+                <Chatting flex={'10'} user={user}></Chatting>
                 <div flex={'1'} style={{textAlign:'center'}}><CustomButton onClick={exitRoom} >방 나가기</CustomButton></div>
             </FlexContainer>
             </div>

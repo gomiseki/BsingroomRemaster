@@ -13,8 +13,9 @@ const sizes = {
         fontSize: "12px"
     },
     small: {
-        height: '1.75rem',
-        fontSize: '0.875rem'
+        width: "50px",
+        height: "30px",
+        fontSize: "15px"
     }
   };
 
