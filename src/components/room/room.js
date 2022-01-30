@@ -37,7 +37,7 @@ const TitleInput = styled.input`
 `
 const Title = ({value, flex}) =>{
     return(
-        <TitleInput flex={flex} value={value}/>
+        <TitleInput readOnly flex={flex} value={value}/>
     )
 }
 
@@ -80,8 +80,8 @@ function Room() {
                 <YTVideo flex={'10'}></YTVideo>
             </FlexContainer>
             <FlexContainer flex={'2'}>
-                <Chatting flex={'10'} user={user}></Chatting>
-                <div flex={'1'} style={{textAlign:'center'}}><CustomButton onClick={exitRoom} >방 나가기</CustomButton></div>
+                <Chatting flex={'0 0 90%'} user={user}></Chatting>
+                <div  style={{textAlign:'center', flex:"0 0 10%",display:'flex',justifyContent:'center',alignItems:'center'}}><CustomButton onClick={exitRoom} >방 나가기</CustomButton></div>
             </FlexContainer>
             </div>
             <Devices user={user} ></Devices>

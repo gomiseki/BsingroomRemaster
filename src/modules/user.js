@@ -5,7 +5,7 @@ const ENDPOINT = "https://bsingroom.loca.lt";
 class User{
 
     host = false;
-    roomInfo = false;
+    roomInfo;
     mediaStream;
     connection;
     audioRef;

@@ -4,40 +4,45 @@ import CustomButton from "../btn";
 
 const Container = styled.div`
     flex: ${props=>props.flex};
-    width: 100%auto;
-    height: 90%auto;
     display: flex;
     flex-direction: column;
+    align-items: stretch;
 `
 const ChatContainer = styled.div`
-    flex: 5;
+    flex: 0 0 80%;
     margin: 5px;
     border: 1px solid lightgray;
     border-radius: 5px;
     width: 100%auto;
-    display:flex;
-    flex-direction: column;
+    overflow: hidden;
 `
 const Title = styled.div`
+    height: 10%;
     display:flex;
-    flex: 1;
-    width: 100%auto;
     margin:0 10px;
     border-bottom: 1px solid lightgray;
     align-items: center;
     color: white;
 `
-const ChatText = styled.div`
-    flex: 10;
-    padding: 5px;
-    width: 100%auto;
+const ChatText = styled.div`::-webkit-scrollbar{
+    width: 10px;
+    border-radius: 5px;
+    background-color: silver;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: darkgray;
+}
+    width:100%auto;
+    padding: 10px;
+    overflow-y:auto;
+    height:32vw;
 `
 const SendContainer = styled.form`
-    flex: 1;
+    flex: 0 0 18%;
     margin: 5px;
     border: 1px solid lightgray;
     border-radius: 5px;
-    width: 100%auto;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -54,8 +59,6 @@ const TextInput = styled.textarea`
 const ChatDiv = styled.div`
     display: flex;
     flex-direction: column;
-    width: 100%auto;
-    height: 100%auto;
     align-items: ${props=>props.align};
 `
 const UserInfo = styled.pre`
@@ -64,14 +67,15 @@ const UserInfo = styled.pre`
 
 const Chat = styled.pre`
     color: white;
-    padding:5px; 
-    text-align: center;
+    padding:5px;
     min-width: 50px;
     width: fit-content;
     height: fit-content;
-    word-break:break-all;
+    white-space: pre-line;
+    word-break: break-all;
     border: 1px solid silver;
     border-radius:5px;
+    margin:2px;
 `
 
 const ChatBlock = ({align,chat}) =>{
@@ -83,7 +87,7 @@ const ChatBlock = ({align,chat}) =>{
     )
 }
 
-const ChatList = React.memo(function({chattings, user}){
+const ChatList = React.memo(function ChatList({chattings, user}){
     console.log(chattings)
     return (
     <ChatContainer>
