@@ -13,6 +13,7 @@ const createWindow = () => {
     minHeight: 800,
     maxWidth: 1200,
     maxHeight: 800
+    
   });
 
   // and load the index.html of the app.

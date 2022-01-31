@@ -46,9 +46,9 @@ const Btn = styled.button`
 Btn.defaultProps = {
     size: 'medium'
 }
-function CustomButton({color, size, children, style, onClick}) {
+function CustomButton({color, size, children, style, onClick, type}) {
     return (
-        <Btn onClick={onClick} style={style} color={color} size={size}>{children}</Btn>
+        <Btn type={type} onClick={onClick} style={style} color={color} size={size}>{children}</Btn>
     )}
 
 export default CustomButton;

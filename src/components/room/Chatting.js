@@ -15,11 +15,14 @@ const ChatContainer = styled.div`
     border-radius: 5px;
     width: 100%auto;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 `
 const Title = styled.div`
     height: 10%;
     display:flex;
-    margin:0 10px;
+    margin: 0 15px;
     border-bottom: 1px solid lightgray;
     align-items: center;
     color: white;
@@ -36,7 +39,7 @@ const ChatText = styled.div`::-webkit-scrollbar{
     width:100%auto;
     padding: 10px;
     overflow-y:auto;
-    height:32vw;
+    height:34vw;
 `
 const SendContainer = styled.form`
     flex: 0 0 18%;

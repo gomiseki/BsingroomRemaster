@@ -14,10 +14,11 @@ const Container = styled.div`
 `
 const Title = styled.div`
     color: white;
-    margin: 15px;
+    margin: 0 15px;
     width: 80%auto;
-    height: 10%;
+    height: 15%;
     display: flex;
+    align-items: center;
     border-bottom: 1px solid lightgray;
 `
 
@@ -26,7 +27,7 @@ const UserDisplay = styled.div`
     width: 100%auto;
     height: 10%;
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 `
 const Nickname = styled.div`
@@ -60,7 +61,8 @@ const Audio = ({member})=>{
         <audio ref={audioRef}></audio>
     )
 }
-function UserList({flex, user}){
+
+const UserList = React.memo(function UserList({flex, user}){
 
     const [memberState, memberRef, setMember] = useMember(user)
 
@@ -120,5 +122,5 @@ function UserList({flex, user}){
             })}
         </Container>
     )
-};
+});
 export default UserList

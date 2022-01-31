@@ -82,8 +82,12 @@ function Login(){
             setWorning("icon을 선택하고 nickname을 입력해주세요.")
         }
         else{
-            setWorning("입장 중입니다.....")
+            if(nickname.length>10){
+                setWorning("더 짧은 nickname을 입력해주세요.")
+            }
+            else{ setWorning("입장 중입니다.....")
             navigate('/lobby', {replace:true, state: { nickname : nickname, icon : icon}})
+        }
         }
     }
 

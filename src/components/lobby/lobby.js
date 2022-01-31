@@ -85,7 +85,7 @@ function Lobby(){
         e.preventDefault();
         navigate('/', {replace:true})
         user.socket.disconnect();
-        user.audioCtx.close();
+        user.localAudioCtx.close();
         setUser(null);
     }
 
