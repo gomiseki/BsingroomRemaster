@@ -4,7 +4,7 @@
 
  노마드 코더의 'Zoom 클론코딩'을 계기로 제안하게 된 학교 수업 프로젝트.
  webRTC를 이용한 음성채팅과 socket.io를 통한 문자채팅, youtube iframe API를 통한 노래 공유를
- electron, react 프레임워크 위에 구현하였습니다.
+ electron, react 위에 구현하였습니다.
 <br><br>
  
  ## 💡 사용된 기술들
