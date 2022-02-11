@@ -12,15 +12,12 @@ const createWindow = () => {
     minWidth: 1200,
     minHeight: 800,
     maxWidth: 1200,
-    maxHeight: 800
-    
+    maxHeight: 800,
   });
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  mainWindow.menuBarVisible = false;
 };
 
 // This method will be called when Electron has finished
