@@ -15,10 +15,6 @@
     "dist:win": "electron-builder --win"
   },
   "keywords": [],
-  "author": {
-    "name": "gomiseki",
-    "email": "kimju1755@gmail.com"
-  },
   "license": "MIT",
   "config": {
     "forge": {
