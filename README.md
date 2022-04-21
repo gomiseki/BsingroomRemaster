@@ -16,6 +16,15 @@
 - 음성 채팅 : WebRTC
 - 소켓 통신 : Socket.io
 - 시그널링 서버 : Express
-
+<br><br>
+ 
+ ## 🏁 주요 기능
+ ✅ 익명(닉네임)으로 입장<br>
+ ✅ 5명의 인원제한 및 채팅방 생성(모두 public ㅠㅠ)<br>
+ ✅ 입력 기기 변경 및 음량 조절<br>
+ ✅ 출력 음량 조절<br>
+ ✅ 유튜브 디제잉<br>
+ ✅ 문자 채팅<br>
+ 
 <br><br>
 ### 프로젝트 회고 아카이브 -> [Archive](https://velog.io/@gomiseki/series/Bsingroom-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8)
